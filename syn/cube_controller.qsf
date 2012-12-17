@@ -42,7 +42,6 @@ set_global_assignment -name TOP_LEVEL_ENTITY planeController
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 12.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "10:57:10  DECEMBER 17, 2012"
 set_global_assignment -name LAST_QUARTUS_VERSION 12.1
-set_global_assignment -name VERILOG_FILE ../rtl/planeController.v
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -53,6 +52,93 @@ set_global_assignment -name POWER_EXT_SUPPLY_VOLTAGE_TO_REGULATOR 3.3V
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (Verilog)"
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
 set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS OFF
-set_global_assignment -name MAXII_OPTIMIZATION_TECHNIQUE AREA
+set_global_assignment -name MAXII_OPTIMIZATION_TECHNIQUE BALANCED
 set_global_assignment -name SYNTH_TIMING_DRIVEN_SYNTHESIS OFF
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "NO HEAT SINK WITH STILL AIR"
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
+set_global_assignment -name IOBANK_VCCIO 3.3V -section_id 1
+set_global_assignment -name IOBANK_VCCIO 3.3V -section_id 2
+set_instance_assignment -name IO_STANDARD "3.3V SCHMITT TRIGGER INPUT" -to reset
+set_instance_assignment -name IO_STANDARD "3.3V SCHMITT TRIGGER INPUT" -to rs
+set_instance_assignment -name IO_STANDARD "3.3V SCHMITT TRIGGER INPUT" -to dataEn
+set_location_assignment PIN_1 -to dataIn[0]
+set_location_assignment PIN_2 -to dataIn[1]
+set_location_assignment PIN_3 -to dataIn[2]
+set_location_assignment PIN_4 -to dataIn[3]
+set_location_assignment PIN_5 -to dataIn[4]
+set_location_assignment PIN_6 -to dataIn[5]
+set_location_assignment PIN_7 -to dataIn[6]
+set_location_assignment PIN_8 -to dataIn[7]
+set_location_assignment PIN_29 -to pwmOut[8]
+set_location_assignment PIN_30 -to pwmOut[9]
+set_location_assignment PIN_33 -to pwmOut[10]
+set_location_assignment PIN_17 -to pwmOut[0]
+set_location_assignment PIN_12 -to clk
+set_location_assignment PIN_14 -to dataEn
+set_location_assignment PIN_15 -to rs
+set_location_assignment PIN_16 -to reset
+set_location_assignment PIN_18 -to pwmOut[1]
+set_location_assignment PIN_19 -to pwmOut[2]
+set_location_assignment PIN_20 -to pwmOut[3]
+set_location_assignment PIN_21 -to pwmOut[4]
+set_location_assignment PIN_26 -to pwmOut[5]
+set_location_assignment PIN_27 -to pwmOut[6]
+set_location_assignment PIN_28 -to pwmOut[7]
+set_location_assignment PIN_34 -to pwmOut[11]
+set_location_assignment PIN_35 -to pwmOut[12]
+set_location_assignment PIN_36 -to pwmOut[13]
+set_location_assignment PIN_38 -to pwmOut[14]
+set_location_assignment PIN_40 -to pwmOut[15]
+set_location_assignment PIN_41 -to pwmOut[16]
+set_location_assignment PIN_42 -to pwmOut[17]
+set_location_assignment PIN_43 -to pwmOut[18]
+set_location_assignment PIN_44 -to pwmOut[19]
+set_location_assignment PIN_47 -to pwmOut[20]
+set_location_assignment PIN_48 -to pwmOut[21]
+set_location_assignment PIN_49 -to pwmOut[22]
+set_location_assignment PIN_50 -to pwmOut[23]
+set_location_assignment PIN_51 -to pwmOut[24]
+set_location_assignment PIN_52 -to pwmOut[25]
+set_location_assignment PIN_53 -to pwmOut[26]
+set_location_assignment PIN_54 -to pwmOut[27]
+set_location_assignment PIN_55 -to pwmOut[28]
+set_location_assignment PIN_56 -to pwmOut[29]
+set_location_assignment PIN_57 -to pwmOut[30]
+set_location_assignment PIN_58 -to pwmOut[31]
+set_location_assignment PIN_61 -to pwmOut[32]
+set_location_assignment PIN_62 -to pwmOut[33]
+set_location_assignment PIN_64 -to pwmOut[34]
+set_location_assignment PIN_66 -to pwmOut[35]
+set_location_assignment PIN_67 -to pwmOut[36]
+set_location_assignment PIN_68 -to pwmOut[37]
+set_location_assignment PIN_69 -to pwmOut[38]
+set_location_assignment PIN_70 -to pwmOut[39]
+set_location_assignment PIN_71 -to pwmOut[40]
+set_location_assignment PIN_72 -to pwmOut[41]
+set_location_assignment PIN_73 -to pwmOut[42]
+set_location_assignment PIN_74 -to pwmOut[43]
+set_location_assignment PIN_75 -to pwmOut[44]
+set_location_assignment PIN_76 -to pwmOut[45]
+set_location_assignment PIN_77 -to pwmOut[46]
+set_location_assignment PIN_78 -to pwmOut[47]
+set_location_assignment PIN_81 -to pwmOut[48]
+set_location_assignment PIN_82 -to pwmOut[49]
+set_location_assignment PIN_83 -to pwmOut[50]
+set_location_assignment PIN_84 -to pwmOut[51]
+set_location_assignment PIN_85 -to pwmOut[52]
+set_location_assignment PIN_86 -to pwmOut[53]
+set_location_assignment PIN_87 -to pwmOut[54]
+set_location_assignment PIN_89 -to pwmOut[55]
+set_location_assignment PIN_91 -to pwmOut[56]
+set_location_assignment PIN_92 -to pwmOut[57]
+set_location_assignment PIN_95 -to pwmOut[58]
+set_location_assignment PIN_96 -to pwmOut[59]
+set_location_assignment PIN_97 -to pwmOut[60]
+set_location_assignment PIN_98 -to pwmOut[61]
+set_location_assignment PIN_99 -to pwmOut[62]
+set_location_assignment PIN_100 -to pwmOut[63]
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 5
+set_global_assignment -name AUTO_RESTART_CONFIGURATION OFF
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED WITH WEAK PULL-UP"
+set_global_assignment -name VERILOG_FILE ../rtl/planeController.v

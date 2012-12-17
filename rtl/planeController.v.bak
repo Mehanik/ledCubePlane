@@ -30,8 +30,8 @@ begin
         if (rs == 0'b1) begin
             casez(dataIn)
                 8'b0000_0001: mem <= 'b0; // Clear memory
-                8'b0000_001?: incDec <= dataIn[1];
                 8'b0000_001?: memAddr <= 'b0; // Zero address
+                8'b0000_01??: incDec <= dataIn[1];
                 8'b1???_????: memAddr <= dataIn[D_WIDTH - 2:0]; // Set address
                 default: $display("Error: no such command");
             endcase
