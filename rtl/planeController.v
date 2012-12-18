@@ -2,7 +2,8 @@ module planeController
 #(
     parameter   OUT_NUM = 64,
     parameter   D_WIDTH = 8,    // Memory interface data bus width
-    parameter   C_WIDTH = 5    // PWM counter width
+    parameter   C_WIDTH = 5,     // PWM counter width
+    parameter   MCU_CLK_DIVIDER = 2 // f(mcuClk) = f(clk) / 2^MCU_CLK_DIVIDER
 )
 (
     input       clk,
@@ -10,7 +11,8 @@ module planeController
     input       [D_WIDTH - 1:0] dataIn,
     input       dataEn,
     input       rs,
-    output reg  [OUT_NUM - 1:0] pwmOut
+    output      [OUT_NUM - 1:0] pwmOut,
+    output      mcuClk
 );
 
 reg [C_WIDTH - 1:0] mem [0:OUT_NUM - 1];
@@ -20,36 +22,28 @@ reg pwmEnabled; // Enable pwm output
 reg [C_WIDTH - 1:0] cnt;
 reg oldDataEn;
 
-integer j;
-// Memory interface
-always @(posedge clk)
-begin
+assign mcuClk = cnt[MCU_CLK_DIVIDER];
+
+// Control interface: memAddr, incDec, pwmEnabled
+always @(posedge clk) begin
     if (!reset) begin
-        pwmEnabled <= 0;
-        memAddr <= 0;
-        incDec <= 0;
-        for (j = 0; j < OUT_NUM; j = j + 1)
-            mem[j] <= 'b0;
+        pwmEnabled <= 1'b0;
+        memAddr <= 1'b0;
+        incDec <= 1'b0;
     end else begin
         if (dataEn == 1'b0 && oldDataEn == 1'b1) begin
             if (rs == 1'b1) begin
-                casex(dataIn)
-                    8'b0000_0001: begin // Clear memory
-                        for (j = 0; j < OUT_NUM; j = j + 1)
-                            mem[j] <= 'b0;
-                    end
+                casez(dataIn) // synthesis parallel_case
                     8'b0000_001?: memAddr <= 'b0; // Zero address
                     8'b0000_01??: incDec <= dataIn[1];
                     8'b0000_1???: pwmEnabled <= dataIn[2];
                     8'b1???_????: memAddr <= dataIn[D_WIDTH - 2:0]; // Set address
-                    default: $display("Error: no such command");
                 endcase
             end else begin
-                mem[memAddr] <= dataIn;
                 if (incDec)
-                    memAddr <= memAddr + 'b1;
+                    memAddr <= memAddr + 1'b1;
                 else
-                    memAddr <= memAddr - 'b1;
+                    memAddr <= memAddr - 1'b1;
             end
         end
     end
@@ -63,37 +57,32 @@ begin
     if (!reset) begin
         cnt <= 0;
     end else begin
-        cnt <= cnt + 1;
+        if (cnt <= 5'b11101)
+            cnt <= cnt + 1'b1;
+        else
+            cnt <= 0;
     end
 end
 
 genvar i;
 generate
 for (i = 0; i < OUT_NUM; i = i + 1) begin: pwmOuts
+    // Memory interface
     always @(posedge clk) begin
-        //        if (pwmEnabled == 1'b1) begin
-        //            if (cnt == 0) begin
-        //                if (mem[i] != 0) begin
-        //                    pwmOut[i] <= 1'b1;
-        //                end else begin
-        //                    pwmOut[i] <= 1'b0;
-        //                end
-        //            end else begin
-        //                if (mem[i] == cnt)
-        //                    pwmOut[i] <= 1'b0;
-        //            end
-        //        end else begin
-        //            pwmOut[i] <= 1'b0;
-        //        end
-
-        if (pwmEnabled == 1'b1) begin
-            if (cnt <= mem[i] ) begin
-                pwmOut[i] <= 1'b1;
-            end else begin
-                pwmOut[i] <= 1'b0;
+        if (reset) begin
+            if (dataEn == 1'b0 && oldDataEn == 1'b1) begin // negative edge of dataEn signal
+                if (rs == 1'b1 && dataIn == 8'b0000_0001) begin // `clean memory' command
+                    mem[i] <= 'b0;
+                end else begin
+                    if (memAddr == i[C_WIDTH - 1:0]) begin
+                        mem[i] <= dataIn[C_WIDTH - 1:0];
+                    end
+                end
             end
         end
     end
+
+    assign pwmOut[i] = pwmEnabled ? (cnt < mem[i]) : 1'b0;
 end
 endgenerate
 
