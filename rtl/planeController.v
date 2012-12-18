@@ -1,6 +1,6 @@
 module planeController 
 #(
-    parameter   OUT_NUM = 1,
+    parameter   OUT_NUM = 64,
     parameter   D_WIDTH = 8,    // Memory interface data bus width
     parameter   C_WIDTH = 5    // PWM counter width
 )
@@ -47,9 +47,9 @@ begin
             end else begin
                 mem[memAddr] <= dataIn;
                 if (incDec)
-                    memAddr <= memAddr + 1;
+                    memAddr <= memAddr + 'b1;
                 else
-                    memAddr <= memAddr - 1;
+                    memAddr <= memAddr - 'b1;
             end
         end
     end
@@ -63,27 +63,35 @@ begin
     if (!reset) begin
         cnt <= 0;
     end else begin
-        cnt = cnt + 1;
+        cnt <= cnt + 1;
     end
 end
 
 genvar i;
 generate
 for (i = 0; i < OUT_NUM; i = i + 1) begin: pwmOuts
-    always @(negedge clk) begin
+    always @(posedge clk) begin
+        //        if (pwmEnabled == 1'b1) begin
+        //            if (cnt == 0) begin
+        //                if (mem[i] != 0) begin
+        //                    pwmOut[i] <= 1'b1;
+        //                end else begin
+        //                    pwmOut[i] <= 1'b0;
+        //                end
+        //            end else begin
+        //                if (mem[i] == cnt)
+        //                    pwmOut[i] <= 1'b0;
+        //            end
+        //        end else begin
+        //            pwmOut[i] <= 1'b0;
+        //        end
+
         if (pwmEnabled == 1'b1) begin
-            if (cnt == 0) begin
-                if (mem[i] != 0) begin
-                    pwmOut[i] <= 1'b1;
-                end else begin
-                    pwmOut[i] <= 1'b0;
-                end
+            if (cnt <= mem[i] ) begin
+                pwmOut[i] <= 1'b1;
             end else begin
-                if (mem[i] == cnt)
-                    pwmOut[i] <= 1'b0;
+                pwmOut[i] <= 1'b0;
             end
-        end else begin
-            pwmOut[i] <= 1'b0;
         end
     end
 end

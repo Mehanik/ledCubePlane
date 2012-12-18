@@ -2,7 +2,7 @@
 
 module testPWM;
 
-localparam   OUT_NUM = 64;
+localparam   OUT_NUM = 8;
 localparam   D_WIDTH = 8;    // Memory interface data bus widt;
 localparam   C_WIDTH = 5;    // PWM counter width
 
@@ -21,7 +21,11 @@ planeController  pc(
     .dataIn(data), 
     .dataEn(dataEn), 
     .rs(rs), 
-    .pwmOut(pwmOut));
+    .pwmOut(pwmOut)
+);
+
+defparam
+    pc.OUT_NUM = OUT_NUM;
 
 // clk
 always
@@ -47,7 +51,7 @@ begin
     send_command(8'b0000_0110, 1'b1);
     send_command(8'b0000_1100, 1'b1);
 
-    send_command(8'b0000_1111, 1'b0);
+    send_command(8'b0000_0000, 1'b0);
     send_command(8'b0000_1111, 1'b0);
     send_command(8'b0000_1111, 1'b0);
     send_command(8'b0000_1111, 1'b0);

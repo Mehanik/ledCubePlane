@@ -1,5 +1,5 @@
 Analysis & Synthesis report for cube_controller
-Tue Dec 18 03:38:30 2012
+Tue Dec 18 19:30:59 2012
 Quartus II 32-bit Version 12.1 Build 177 11/07/2012 SJ Web Edition
 
 
@@ -17,7 +17,6 @@ Quartus II 32-bit Version 12.1 Build 177 11/07/2012 SJ Web Edition
   9. Multiplexer Restructuring Statistics (Restructuring Performed)
  10. Parameter Settings for User Entity Instance: Top-level Entity: |planeController
  11. Analysis & Synthesis Messages
- 12. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -43,13 +42,13 @@ applicable agreement for further details.
 +------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                           ;
 +-----------------------------+------------------------------------------+
-; Analysis & Synthesis Status ; Successful - Tue Dec 18 03:38:30 2012    ;
+; Analysis & Synthesis Status ; Successful - Tue Dec 18 19:30:59 2012    ;
 ; Quartus II 32-bit Version   ; 12.1 Build 177 11/07/2012 SJ Web Edition ;
 ; Revision Name               ; cube_controller                          ;
 ; Top-level Entity Name       ; planeController                          ;
 ; Family                      ; MAX II                                   ;
-; Total logic elements        ; 55                                       ;
-; Total pins                  ; 13                                       ;
+; Total logic elements        ; 700                                      ;
+; Total pins                  ; 76                                       ;
 ; Total virtual pins          ; 0                                        ;
 ; UFM blocks                  ; 0 / 1 ( 0 % )                            ;
 +-----------------------------+------------------------------------------+
@@ -153,32 +152,32 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +---------------------------------------------+-------+
 ; Resource                                    ; Usage ;
 +---------------------------------------------+-------+
-; Total logic elements                        ; 55    ;
-;     -- Combinational with no register       ; 34    ;
-;     -- Register only                        ; 1     ;
-;     -- Combinational with a register        ; 20    ;
+; Total logic elements                        ; 700   ;
+;     -- Combinational with no register       ; 301   ;
+;     -- Register only                        ; 321   ;
+;     -- Combinational with a register        ; 78    ;
 ;                                             ;       ;
 ; Logic element usage by number of LUT inputs ;       ;
-;     -- 4 input functions                    ; 28    ;
-;     -- 3 input functions                    ; 16    ;
-;     -- 2 input functions                    ; 8     ;
+;     -- 4 input functions                    ; 157   ;
+;     -- 3 input functions                    ; 211   ;
+;     -- 2 input functions                    ; 9     ;
 ;     -- 1 input functions                    ; 2     ;
 ;     -- 0 input functions                    ; 0     ;
 ;                                             ;       ;
 ; Logic elements by mode                      ;       ;
-;     -- normal mode                          ; 45    ;
+;     -- normal mode                          ; 690   ;
 ;     -- arithmetic mode                      ; 10    ;
 ;     -- qfbk mode                            ; 0     ;
 ;     -- register cascade mode                ; 0     ;
-;     -- synchronous clear/load mode          ; 8     ;
+;     -- synchronous clear/load mode          ; 7     ;
 ;     -- asynchronous clear/load mode         ; 0     ;
 ;                                             ;       ;
-; Total registers                             ; 21    ;
+; Total registers                             ; 399   ;
 ; Total logic cells in carry chains           ; 12    ;
-; I/O pins                                    ; 13    ;
-; Maximum fan-out                             ; 21    ;
-; Total fan-out                               ; 220   ;
-; Average fan-out                             ; 3.24  ;
+; I/O pins                                    ; 76    ;
+; Maximum fan-out                             ; 399   ;
+; Total fan-out                               ; 2462  ;
+; Average fan-out                             ; 3.17  ;
 +---------------------------------------------+-------+
 
 
@@ -187,7 +186,7 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +----------------------------+-------------+--------------+------------+------+--------------+--------------+-------------------+------------------+-----------------+------------+---------------------+--------------+
 ; Compilation Hierarchy Node ; Logic Cells ; LC Registers ; UFM Blocks ; Pins ; Virtual Pins ; LUT-Only LCs ; Register-Only LCs ; LUT/Register LCs ; Carry Chain LCs ; Packed LCs ; Full Hierarchy Name ; Library Name ;
 +----------------------------+-------------+--------------+------------+------+--------------+--------------+-------------------+------------------+-----------------+------------+---------------------+--------------+
-; |planeController           ; 55 (55)     ; 21           ; 0          ; 13   ; 0            ; 34 (34)      ; 1 (1)             ; 20 (20)          ; 12 (12)         ; 0 (0)      ; |planeController    ; work         ;
+; |planeController           ; 700 (700)   ; 399          ; 0          ; 76   ; 0            ; 301 (301)    ; 321 (321)         ; 78 (78)          ; 12 (12)         ; 0 (0)      ; |planeController    ; work         ;
 +----------------------------+-------------+--------------+------------+------+--------------+--------------+-------------------+------------------+-----------------+------------+---------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -197,12 +196,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 21    ;
-; Number of registers using Synchronous Clear  ; 8     ;
+; Total registers                              ; 399   ;
+; Number of registers using Synchronous Clear  ; 7     ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 11    ;
+; Number of registers using Clock Enable       ; 390   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -212,8 +211,71 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output  ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------+
-; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[0][4]  ;
-; 131:1              ; 6 bits    ; 522 LEs       ; 264 LEs              ; 258 LEs                ; Yes        ; |planeController|memAddr[6] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[63][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[62][4] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[61][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[60][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[59][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[58][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[57][3] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[56][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[55][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[54][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[53][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[52][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[51][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[50][4] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[49][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[48][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[47][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[46][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[45][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[44][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[43][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[42][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[41][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[40][2] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[39][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[38][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[37][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[36][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[35][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[34][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[33][2] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[32][3] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[31][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[30][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[29][4] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[28][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[27][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[26][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[25][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[24][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[23][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[22][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[21][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[20][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[19][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[18][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[17][4] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[16][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[15][3] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[14][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[13][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[12][1] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[11][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[10][0] ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[9][1]  ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[8][1]  ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[7][4]  ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[6][1]  ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[5][1]  ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[4][1]  ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[3][0]  ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[2][0]  ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[1][0]  ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |planeController|mem[0][1]  ;
+; 131:1              ; 6 bits    ; 522 LEs       ; 264 LEs              ; 258 LEs                ; Yes        ; |planeController|memAddr[5] ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------+
 
 
@@ -222,7 +284,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------+-------+--------------------------------------------------------+
 ; Parameter Name ; Value ; Type                                                   ;
 +----------------+-------+--------------------------------------------------------+
-; OUT_NUM        ; 1     ; Signed Integer                                         ;
+; OUT_NUM        ; 64    ; Signed Integer                                         ;
 ; D_WIDTH        ; 8     ; Signed Integer                                         ;
 ; C_WIDTH        ; 5     ; Signed Integer                                         ;
 +----------------+-------+--------------------------------------------------------+
@@ -235,7 +297,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus II 32-bit Analysis & Synthesis
     Info: Version 12.1 Build 177 11/07/2012 SJ Web Edition
-    Info: Processing started: Tue Dec 18 03:38:29 2012
+    Info: Processing started: Tue Dec 18 19:30:54 2012
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cube_controller -c cube_controller
 Warning (20028): Parallel compilation is not licensed and has been disabled
 Info (12021): Found 1 design units, including 1 entities, in source file /home/eugene/Projects/embedded/led_cube_fpga/rtl/planeController.v
@@ -245,21 +307,14 @@ Warning (10230): Verilog HDL assignment warning at planeController.v(48): trunca
 Warning (10230): Verilog HDL assignment warning at planeController.v(50): truncated value with size 32 to match size of target (7)
 Warning (10230): Verilog HDL assignment warning at planeController.v(52): truncated value with size 32 to match size of target (7)
 Warning (10230): Verilog HDL assignment warning at planeController.v(66): truncated value with size 32 to match size of target (5)
-Info (21057): Implemented 68 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 776 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 12 input pins
-    Info (21059): Implemented 1 output pins
-    Info (21061): Implemented 55 logic cells
-Info (144001): Generated suppressed messages file /home/eugene/Projects/embedded/led_cube_fpga/syn/output_files/cube_controller.map.smsg
+    Info (21059): Implemented 64 output pins
+    Info (21061): Implemented 700 logic cells
 Info: Quartus II 32-bit Analysis & Synthesis was successful. 0 errors, 5 warnings
     Info: Peak virtual memory: 319 megabytes
-    Info: Processing ended: Tue Dec 18 03:38:30 2012
-    Info: Elapsed time: 00:00:01
-    Info: Total CPU time (on all processors): 00:00:01
-
-
-+------------------------------------------+
-; Analysis & Synthesis Suppressed Messages ;
-+------------------------------------------+
-The suppressed messages can be found in /home/eugene/Projects/embedded/led_cube_fpga/syn/output_files/cube_controller.map.smsg.
+    Info: Processing ended: Tue Dec 18 19:30:59 2012
+    Info: Elapsed time: 00:00:05
+    Info: Total CPU time (on all processors): 00:00:05
 
 
