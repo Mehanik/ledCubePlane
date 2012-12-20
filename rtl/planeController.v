@@ -16,9 +16,9 @@ module planeController
 );
 
 reg [C_WIDTH - 1:0] mem [0:OUT_NUM - 1];
-reg [D_WIDTH - 2:0] memAddr; // Address that will be rewrited
-reg incDec; // Decrement address by default
-reg pwmEnabled; // Enable pwm output
+reg [D_WIDTH - 2:0] memAddr; // Pointer to current address in memory.
+reg incDec; // Decriment or increment address. Decrementation is by default.
+reg pwmEnabled; // Enable pwm output.
 reg [C_WIDTH - 1:0] cnt;
 reg oldDataEn;
 
