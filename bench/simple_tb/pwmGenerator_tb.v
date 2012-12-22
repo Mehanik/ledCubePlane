@@ -33,7 +33,7 @@ always
 
 // clk
 always
-    #(SYSCLK_DELAY*4) clk4 = ~clk4;
+    #(SYSCLK_DELAY*16) clk4 = ~clk4;
 
 initial
 begin
@@ -52,14 +52,14 @@ begin
     send_command(8'b0000_1100, 1'b1);
 
     send_command(8'b0000_0000, 1'b0);
-    send_command(8'b0000_1111, 1'b0);
-    send_command(8'b0000_1111, 1'b0);
-    send_command(8'b0000_1111, 1'b0);
+    send_command(8'b0000_0001, 1'b0);
+    send_command(8'b0000_0010, 1'b0);
+    send_command(8'b0000_0011, 1'b0);
 
-    send_command(8'b1111_1111, 1'b0);
-    send_command(8'b1111_1111, 1'b0);
-    send_command(8'b1111_1111, 1'b0);
-    send_command(8'b1111_1111, 1'b0);
+    send_command(8'b1111_0100, 1'b0);
+    send_command(8'b1111_0101, 1'b0);
+    send_command(8'b1111_0110, 1'b0);
+    send_command(8'b1111_0111, 1'b0);
 
     #10000
     $finish;
