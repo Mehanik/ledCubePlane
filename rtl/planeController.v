@@ -12,7 +12,8 @@ module planeController
     input       dataEn,
     input       rs,
     output      [OUT_NUM - 1:0] pwmOut,
-    output      mcuClk
+    output      mcuClk,
+	output reg  dataEnNegEdge
 );
 
 reg [C_WIDTH - 1:0] mem [0:OUT_NUM - 1];
@@ -20,7 +21,10 @@ reg [D_WIDTH - 2:0] memAddr; // Pointer to current address in memory.
 reg incDec; // Decriment or increment address. Decrementation is by default.
 reg pwmEnabled; // Enable pwm output.
 reg [C_WIDTH - 1:0] cnt;
-reg oldDataEn;
+reg prevDataEn;
+reg [3:0] debCnt; // counter used for debouncing dataEn signal
+localparam DEB_PERIOD = 4'b111;
+// reg dataEnDbn; // debounced dataEn signal, dataEnDbn sets to 1 for one clk cycle after DEB_PERIOD clk cycles after dataEn negative front
 
 assign mcuClk = cnt[MCU_CLK_DIVIDER];
 
@@ -31,7 +35,7 @@ always @(posedge clk) begin
         memAddr <= 1'b0;
         incDec <= 1'b0;
     end else begin
-        if (dataEn == 1'b0 && oldDataEn == 1'b1) begin
+        if (dataEnDbn) begin
             if (rs == 1'b1) begin
                 casez(dataIn) // synthesis parallel_case
                     8'b0000_001?: memAddr <= 'b0; // Zero address
@@ -47,8 +51,29 @@ always @(posedge clk) begin
             end
         end
     end
+end
 
-    oldDataEn <= dataEn;
+// Counter used for dateEn debounce
+always @(posedge clk) begin
+    if (prevDataEn == 1'b1 && dataEn == 1'b0)
+    begin
+        debCnt <= 'b1;
+    end else begin
+        if (debCnt != 0)
+            debCnt <= debCnt + 1'b1;
+    end
+end
+
+always @(posedge clk) begin
+//    if (debCnt == DEB_PERIOD && dataEn == 1'b0)
+//        dataEnDbn <= 1;
+//    else 
+//        dataEnDbn <= 0;
+ dataEnDbn <= (prevDataEn == 1'b1 && dataEn == 1'b0);
+end
+
+always @(posedge clk) begin
+    prevDataEn <= dataEn;
 end
 
 // counter
@@ -57,10 +82,11 @@ begin
     if (!reset) begin
         cnt <= 0;
     end else begin
-        if (cnt <= 5'b11101)
+        if (cnt <= 5'b11101) begin //
             cnt <= cnt + 1'b1;
-        else
+        end else begin
             cnt <= 0;
+        end
     end
 end
 
@@ -70,12 +96,12 @@ for (i = 0; i < OUT_NUM; i = i + 1) begin: pwmOuts
     // Memory interface
     always @(posedge clk) begin
         if (reset) begin
-            if (dataEn == 1'b0 && oldDataEn == 1'b1) begin // negative edge of dataEn signal
+            if (dataEnDbn) begin
                 if (rs == 1'b1 && dataIn == 8'b0000_0001) begin // `clean memory' command
                     mem[i] <= 'b0;
                 end else begin
                     if (memAddr == i[C_WIDTH - 1:0]) begin
-                        mem[i] <= dataIn[C_WIDTH - 1:0];
+                        mem[i] <= dataIn[C_WIDTH - 1:0]; // load value to memory
                     end
                 end
             end
